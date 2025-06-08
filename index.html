@@ -1,0 +1,71 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>App Bíblico</title>
+  <style>
+    body { font-family: Arial; padding: 20px; background-color: #f4f4f4; }
+    h1 { color: #2c3e50; }
+    select, input { padding: 5px; margin: 5px; }
+    .versiculo { background: white; padding: 15px; border-radius: 8px; box-shadow: 0 0 5px #ccc; margin-top: 20px; }
+  </style>
+</head>
+<body>
+  <h1>Consulta Bíblica com Reflexões</h1>
+  <label>Livro:
+    <select id="livro">
+      <option>João</option>
+      <option>Jó</option>
+    </select>
+  </label>
+  <label>Capítulo: <input type="number" id="capitulo" value="3" /></label>
+  <label>Versículo: <input type="number" id="versiculo" value="16" /></label>
+  <button onclick="buscar()">Buscar</button>
+
+  <div class="versiculo" id="resultado"></div>
+
+  <script>
+    const estudos = {
+      "João": {
+        3: {
+          16: {
+            texto: "Porque Deus amou o mundo de tal maneira que deu o seu Filho unigênito...",
+            reflexao: "Esse versículo nos mostra o amor imenso de Deus pela humanidade.",
+            contexto: "Jesus conversava com Nicodemos sobre o novo nascimento."
+          }
+        }
+      },
+      "Jó": {
+        1: {
+          8: {
+            texto: "E disse o Senhor a Satanás: Observaste tu a meu servo Jó?",
+            reflexao: "Mesmo sendo íntegro, Jó enfrentou provações — isso nos ensina sobre fé em meio à dor.",
+            contexto: "Deus apresenta Jó como exemplo de fidelidade, iniciando a narrativa da provação."
+          }
+        }
+      }
+    };
+
+    function buscar() {
+      const livro = document.getElementById("livro").value;
+      const cap = document.getElementById("capitulo").value;
+      const vers = document.getElementById("versiculo").value;
+
+      const data = estudos[livro]?.[cap]?.[vers];
+      const resultado = document.getElementById("resultado");
+
+      if (data) {
+        resultado.innerHTML = `
+          <h2>${livro} ${cap}:${vers}</h2>
+          <p><strong>Texto:</strong> ${data.texto}</p>
+          <p><strong>Reflexão:</strong> ${data.reflexao}</p>
+          <p><strong>Contexto histórico:</strong> ${data.contexto}</p>
+        `;
+      } else {
+        resultado.innerHTML = "<p>Versículo não encontrado.</p>";
+      }
+    }
+  </script>
+</body>
+</html>
